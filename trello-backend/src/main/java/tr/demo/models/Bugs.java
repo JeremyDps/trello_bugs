@@ -31,5 +31,10 @@ public class Bugs {
     private LocalDate creation_date;
 
     @ManyToMany
+    @JoinTable(
+            name = "bugs_developers",
+            joinColumns = @JoinColumn(name = "bug_id"),
+            inverseJoinColumns = @JoinColumn(name = "developer_id")
+    )
     private List<Developers> developers;
 }
