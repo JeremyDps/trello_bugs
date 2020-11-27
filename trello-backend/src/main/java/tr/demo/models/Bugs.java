@@ -1,5 +1,20 @@
 package fr.demo.models;
 
+import fr.demo.models.Developers;
+import tr.demo.enums.Bugs_priority;
+import tr.demo.enums.Bugs_progress;
+
+import java.time.LocalDate;
+import java.util.*;
+
+import javax.persistence.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -11,4 +26,10 @@ public class Bugs {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
     private String name, description;
+    private Bugs_priority priority;
+    private Bugs_progress progress;
+    private LocalDate creation_date;
+
+    @ManyToMany
+    private List<Developers> developers;
 }
