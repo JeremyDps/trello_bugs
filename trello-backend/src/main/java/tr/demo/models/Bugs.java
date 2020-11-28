@@ -37,4 +37,6 @@ public class Bugs {
             inverseJoinColumns = @JoinColumn(name = "developer_id")
     )
     private List<Developers> developers;
+    @OneToMany(mappedBy="commentaire")
+    private List<Commentaire>Commentaires;
 }

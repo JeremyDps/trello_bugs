@@ -26,4 +26,6 @@ public class Developers {
 
     @ManyToMany(mappedBy="developers")
     private List<Bugs> bugs;
+    @OneToMany(mappedBy="developers")
+    private List<Commentaire>commentaire;
 }

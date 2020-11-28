@@ -25,6 +25,11 @@ public class Commentaire {
     @Id
     private int id;
     private String texte;
-    @OneToMany
-       git  private List<Developers>developers;
+    @ManyToOne
+    @JoinColumn(name = "developers_id")
+    private Developers developer;
+    @ManyToOne
+    @JoinColumn(name = "bug_id");
+    private Bugs bug;
+
     }
