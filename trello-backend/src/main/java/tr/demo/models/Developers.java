@@ -1,10 +1,12 @@
-package fr.demo.models;
+package tr.demo.models;
 
-import javax.persistence.*;
+import java.util.List;
 
-import fr.demo.models.Bugs;
-
-import java.util.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,14 +20,17 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Builder
-
 public class Developers {
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private int id;
-    private String nom, prenom, avatar;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	private String nom;
+	private String prenom;
+	private String avatar;
 
-    @ManyToMany(mappedBy="developers")
-    private List<Bugs> bugs;
-    @OneToMany(mappedBy="developers")
-    private List<Commentaire>commentaire;
+	@OneToMany(mappedBy = "developers")
+	private List<Bugs> bugs;
+		
+	@OneToMany(mappedBy = "developers")
+	private List<Commentaire> commentaire;
 }

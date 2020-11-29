@@ -1,35 +1,37 @@
-package fr.demo.models;
-import fr.demo.models.Developers;
-import tr.demo.enums.Bugs_priority;
-import tr.demo.enums.Bugs_progress;
+package tr.demo.models;
 
-import java.time.LocalDate;
-import java.util.*;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 // Lombok
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
 // JPA
-@Entity // Indique que la classe sera utilisée pour des requêtes
+// Indique que la classe sera utilisée pour des requêtes
 public class Commentaire {
-    @Id
-    private int id;
-    private String texte;
-    @ManyToOne
-    @JoinColumn(name = "developers_id")
-    private Developers developer;
-    @ManyToOne
-    @JoinColumn(name = "bug_id");
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
+	private String texte;
+	
+	@ManyToOne
     private Bugs bug;
 
-    }
+    @ManyToOne
+    private Developers developers;
+}
