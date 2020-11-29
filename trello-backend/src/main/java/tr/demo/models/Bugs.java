@@ -1,19 +1,26 @@
-package fr.demo.models;
+package tr.demo.models;
 
-import fr.demo.models.Developers;
-import tr.demo.enums.Bugs_priority;
-import tr.demo.enums.Bugs_progress;
+import java.util.Date;
+import java.util.List;
 
-import java.time.LocalDate;
-import java.util.*;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import tr.demo.enums.Bugs_priority;
+import tr.demo.enums.Bugs_progress;
 
 @Getter
 @Setter
@@ -21,22 +28,25 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Builder
-
 public class Bugs {
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id 
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private int id;
-    private String name, description;
+    private String name;
+    private String description;
+    
+    @Enumerated(EnumType.STRING)
     private Bugs_priority priority;
+    @Enumerated(EnumType.STRING)
     private Bugs_progress progress;
-    private LocalDate creation_date;
+    
+    @Temporal(TemporalType.DATE)
+    private Date creation_date;
 
-    @ManyToMany
-    @JoinTable(
-            name = "bugs_developers",
-            joinColumns = @JoinColumn(name = "bug_id"),
-            inverseJoinColumns = @JoinColumn(name = "developer_id")
-    )
-    private List<Developers> developers;
-    @OneToMany(mappedBy="commentaire")
-    private List<Commentaire>Commentaires;
+    @ManyToOne
+    private Developers developers;
+    
+    @OneToMany(mappedBy="bug")
+    private List<Commentaire> commentaires;
+
 }
