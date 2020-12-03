@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import tr.demo.enums.Bugs_priority;
 import tr.demo.enums.Bugs_progress;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Getter
 @Setter
@@ -44,9 +45,11 @@ public class Bugs {
     private Date creation_date;
 
     @ManyToOne
+    @JsonIgnoreProperties({"bugs", "commentaire"})
     private Developers developers;
     
     @OneToMany(mappedBy="bug")
+    @JsonIgnoreProperties({"bug", "developers"})
     private List<Commentaire> commentaires;
 
 }
