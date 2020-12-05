@@ -12,6 +12,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 // Lombok
 
 @Getter
@@ -30,8 +32,10 @@ public class Commentaire {
 	private String texte;
 	
 	@ManyToOne
+	@JsonIgnoreProperties({"developers", "commentaires"})
     private Bugs bug;
 
     @ManyToOne
+	@JsonIgnoreProperties({"bugs", "commentaire"})
     private Developers developers;
 }

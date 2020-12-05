@@ -3,6 +3,10 @@ package tr.demo.models;
 import java.util.Date;
 
 //import javax.persistence.Temporal;
+import tr.demo.enums.Bugs_priority;
+import tr.demo.enums.Bugs_progress;
+
+import tr.demo.models.Developers;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,10 +20,10 @@ import lombok.Setter;
 public class CreateBugs {
     private String name;
     private String description;
-    private String priority;
-    private String progress;
+    private Bugs_priority priority;
+    private Bugs_progress progress;
 
     //@Temporal(TemporalType.DATE)
     private Date creation_date;
-    private int developers_id;
+    private Developers developers_id;
 }
