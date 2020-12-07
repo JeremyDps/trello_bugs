@@ -25,5 +25,5 @@ public class CreateBugs {
 
     //@Temporal(TemporalType.DATE)
     private Date creation_date;
-    private Developers developers_id;
+    private Developers developers;
 }

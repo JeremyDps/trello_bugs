@@ -55,11 +55,11 @@ public class BugsRoute {
     }
 
     @PostMapping("bugs")
-    public String createBugs(@Validated @RequestBody CreateBugs bug) {
+    public Bugs createBugs(@Validated @RequestBody CreateBugs bug) {
         Date date = new Date();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        String strDate = simpleDateFormat.format(date);
-        /*bugsRepository.save(
+        /*SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String strDate = simpleDateFormat.format(date);*/
+        return bugsRepository.save(
                 Bugs
                 .builder()
                 .name(bug.getName())
@@ -67,21 +67,29 @@ public class BugsRoute {
                 .priority(bug.getPriority())
                 .progress(bug.getProgress())
                 .creation_date(date)
-                //.developers(bug.getDevelopers())
+                .developers(bug.getDevelopers())
                 .build()
         );
-        developersRepository.save(bugsRepository.getDevelopers());*/
-        return "post ok";
+
     }
 
-    /*@PutMapping("bugs/{id}")
-    public String updateBugs(@PathVariable("id") Integer id, @Validated @RequestBody CreateBugs bug) throws ResourceNotFoundException {
+    @PutMapping("bugs/{id}")
+    public ResponseEntity<?> updateBugs(@PathVariable("id") Integer id, @Validated @RequestBody CreateBugs bug) throws ResourceNotFoundException {
         if(!bugsRepository.existsById(id)) {
             throw new ResourceNotFoundException("Bug not found with id = " + id);
         }
 
+        Bugs existBug = bugsRepository.findById(id).orElse(null);
 
-    }*/
+        existBug.setName(bug.getName());
+        existBug.setDescription(bug.getDescription());
+        existBug.setPriority(bug.getPriority());
+        existBug.setProgress(bug.getProgress());
+        existBug.setDevelopers(bug.getDevelopers());
+
+        bugsRepository.save(existBug);
+        return ResponseEntity.ok().build();
+    }
 
     @DeleteMapping("bugs/{id}")
     public ResponseEntity<?> deleteBugs(@PathVariable("id") Integer id) {
@@ -120,6 +128,7 @@ public class BugsRoute {
         );
     }
 
+
     @DeleteMapping("developers/{id}")
     public ResponseEntity<?> deleteDevelopers(@PathVariable("id") Integer id) {
         if(!developersRepository.existsById(id)) {
@@ -144,17 +153,22 @@ public class BugsRoute {
         return commentairesRepository.findAll();
     }
 
-    /*@PostMapping("commentaire")
-    public Developers createDevelopers(@Validated @RequestBody CreateDevelopers dev) {
-        return developersRepository.save(
-                Developers
-                        .builder()
-                        .nom(dev.getNom())
-                        .prenom(dev.getPrenom())
-                        .avatar(dev.getAvatar())
-                        .build()
+    @PostMapping("commentaires/{idBug}")
+    public Commentaire createDevelopers(@PathVariable("idBug") Integer idBug, @Validated @RequestBody CreateCommentaire commentaire) {
+        if(!bugsRepository.existsById(idBug)) {
+            throw new ResourceNotFoundException("Bug not found with id = " + idBug);
+        }
+
+        //Bugs existBug = bugsRepository.findById(idBug).orElse(null);
+        return commentairesRepository.save(
+            Commentaire
+            .builder()
+            .texte(commentaire.getTexte())
+            .bug(commentaire.getBug())
+            .developers(commentaire.getDevelopers())
+            .build()
         );
-    }*/
+    }
 
     @DeleteMapping("commentaires/{id}")
     public ResponseEntity<?> deleteCommentaires(@PathVariable("id") Integer id) {
