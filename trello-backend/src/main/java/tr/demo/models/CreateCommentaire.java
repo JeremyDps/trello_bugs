@@ -1,5 +1,8 @@
 package tr.demo.models;
 
+import tr.demo.models.Bugs;
+import tr.demo.models.Developers;
+
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,6 +14,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CreateCommentaire {
     private String texte;
-    private int bug_id;
-    private int developers_id;
+    private Bugs bug;
+    private Developers developers;
 }

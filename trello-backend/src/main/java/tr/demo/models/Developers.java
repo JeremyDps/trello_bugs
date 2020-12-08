@@ -14,6 +14,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -29,8 +31,10 @@ public class Developers {
 	private String avatar;
 
 	@OneToMany(mappedBy = "developers")
+	@JsonIgnoreProperties({"developers", "commentaire"})
 	private List<Bugs> bugs;
 		
 	@OneToMany(mappedBy = "developers")
+	@JsonIgnoreProperties({"bug", "developers"})
 	private List<Commentaire> commentaire;
 }
