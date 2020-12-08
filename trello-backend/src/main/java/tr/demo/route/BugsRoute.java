@@ -2,6 +2,17 @@ package tr.demo.route;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -26,6 +37,8 @@ import tr.demo.models.CreateDevelopers;
 import tr.demo.models.Developers;
 import tr.demo.models.CreateCommentaire;
 import tr.demo.models.Commentaire;
+import tr.demo.payload.UploadFileResponse;
+import tr.demo.service.BugsService;
 
 import tr.demo.repositories.BugsRepository;
 import tr.demo.repositories.CommentairesRepository;
@@ -33,6 +46,11 @@ import tr.demo.repositories.DevelopersRepository;
 
 @RestController
 public class BugsRoute {
+
+    private static final Logger logger = LoggerFactory.getLogger(BugsRoute.class);
+
+    @Autowired
+    private BugsService bugsService;
 
     @Autowired
     BugsRepository bugsRepository;
@@ -128,7 +146,6 @@ public class BugsRoute {
         );
     }
 
-
     @DeleteMapping("developers/{id}")
     public ResponseEntity<?> deleteDevelopers(@PathVariable("id") Integer id) {
         if(!developersRepository.existsById(id)) {
@@ -181,5 +198,65 @@ public class BugsRoute {
                     commentairesRepository.delete(c);
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new ResourceNotFoundException("Le commentaire n'a pas été trouvé avec l'id = " + id));
+    }
+
+    //images
+    @PostMapping("/developers/{id}/uploadFile")
+    public String uploadFile(@PathVariable("id") Integer id, @RequestParam("file") MultipartFile file) {
+        String fileName = bugsService.storeFile(file);
+
+        if(!developersRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Developer not found with id = " + id);
+        }
+
+        Developers existDev = developersRepository.findById(id).orElse(null);
+
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/downloadFile/" + id + "/")
+                .path(fileName)
+                .toUriString();
+
+        UploadFileResponse uploadFileResponse = new UploadFileResponse(fileName, fileDownloadUri,
+                file.getContentType(), file.getSize());
+
+        existDev.setAvatar(uploadFileResponse.getFileDownloadUri());
+
+        developersRepository.save(existDev);
+
+        return "avatar updated : id = " + id + ", avatar link = " + existDev.getAvatar();
+    }
+
+    @GetMapping("/downloadFile/{id}/{fileName}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable("id") Integer id, @PathVariable("fileName") String fileName, HttpServletRequest request) {
+        if(!developersRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Developer not found with id = " + id);
+        }
+
+        Developers existDev = developersRepository.findById(id).orElse(null);
+
+        if(!existDev.getAvatar().equals("http://localhost:8080/downloadFile/" + id + "/" + fileName)) {
+            throw new ResourceNotFoundException("Avatar not found with avatar = " + existDev.getAvatar());
+        }
+
+        //Load file as Resource
+        Resource resource = bugsService.loadFileAsResource(fileName);
+
+        //try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            logger.info("Could not determine file type");
+        }
+
+        //Fallback to the default content type if type could not be determined
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                .body(resource);
     }
 }
