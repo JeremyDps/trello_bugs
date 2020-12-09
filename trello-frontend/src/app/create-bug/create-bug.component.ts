@@ -10,30 +10,9 @@ import { BugsService } from './../service/bugs.service';
 })
 export class CreateBugComponent implements OnInit {
 
-  createForm!: FormGroup;
-
-  @Output() createEvent = new EventEmitter<Bug>();
-
-  constructor(public formBuilder: FormBuilder, 
-      private bugsService: BugsService) { }
-
   ngOnInit(): void {
-    this.createForm = this.formBuilder.group({
-      name:'',dev:'',date:''
-    });
+    throw new Error('Method not implemented.');
   }
 
-    onSubmit(bugData: { id: any; name: any; dev: any; date: any; }): void{
-      this.createForm.reset();
-      const bug: Bug = {
-        id: bugData.id,
-        name: bugData.name,
-        dev: bugData.dev,
-        date: bugData.date
-       };
-    this.bugsService.createBug(bug).subscribe((bugsResponse: any) => {
-      this.createEvent.emit(bugsResponse);
-    });
-  }
 
 }

@@ -9,5 +9,5 @@ export class AppComponent {
   goToLink(url: string): void{
     window.open(url, '_blank');
   }
-  
+
 }
