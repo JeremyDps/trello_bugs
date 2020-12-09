@@ -67,6 +67,13 @@ public class BugsRoute {
         return bugsRepository.findById(id).orElse(null);
     }
 
+    @GetMapping("bugs/search")
+    public List<Bugs> findByName(@RequestParam (required = true) String name) {
+        return bugsRepository.findAll().stream()
+                .filter(b -> b.getName().equals(name))
+                .collect(Collectors.toList());
+    }
+
     @GetMapping("bugs")
     public List<Bugs> getAllBugs() {
         return bugsRepository.findAll();

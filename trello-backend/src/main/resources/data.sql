@@ -1,5 +1,5 @@
 insert into developers (id, nom, prenom) values
-(1, 'Dupuis', 'Jérémy'),
+(1, 'Dupuis', 'Jeremy'),
 (2, 'Duchmol', 'Robert');
 
 insert into bugs (id, name, description, priority, progress, creation_date, developers_id) values

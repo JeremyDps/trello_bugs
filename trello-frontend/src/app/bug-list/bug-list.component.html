@@ -7,9 +7,10 @@
         <p>Taches à faire</p>
       </div>
       <div class="col-lg-12" *ngFor="let b of bugs">
-        <div class="col-lg-12 block-bugs">
+        <div class="col-lg-12 block-bugs" *ngIf="b.progress == 'TODO'">
           <p>{{ b.name }}</p>
           <p>{{ b.description }}</p>
+          <p>{{ b.priority }}</p>
           <p>{{b.developers.nom}}</p>
           <p>{{b.developers.prenom}}</p>
         </div>
@@ -22,7 +23,7 @@
         <p>Taches en cours</p>
       </div>
       <div class="col-lg-12" *ngFor="let b of bugs">
-        <div class="col-lg-12 block-bugs">
+        <div class="col-lg-12 block-bugs" *ngIf="b.progress == 'ENCOURS'">
           <p>{{ b.name }}</p>
           <p>{{ b.description }}</p>
           <p>{{b.developers.nom}}</p>
@@ -37,7 +38,7 @@
         <p>Taches terminées</p>
       </div>
       <div class="col-lg-12" *ngFor="let b of bugs">
-        <div class="col-lg-12 block-bugs">
+        <div class="col-lg-12 block-bugs" *ngIf="b.progress == 'TERMINE'">
           <p>{{ b.name }}</p>
           <p>{{ b.description }}</p>
           <p>{{b.developers.nom}}</p>

@@ -15,6 +15,10 @@ export class BugsService {
     return this.http.get<Bug[]>(`${environment.url}/bugs`);
   }
 
+  public getBugsById(id: number): Observable<Bug>{
+    return this.http.get<Bug>(`${environment.url}/bugs/${id}`);
+  }
+
   public deleteBug(id: number): Observable<any>{
     return this.http.delete(`${environment.url}/bugs/${id}`);
   }
