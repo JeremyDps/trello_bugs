@@ -1,7 +1,7 @@
 import { Developer } from './developer';
 
 export interface Bug{
-    id: number;
+    id?: number;
     name: string;
     description: string;
     priority: string;

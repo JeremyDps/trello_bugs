@@ -1,3 +1,16 @@
 <p>bug-detail works!</p>
-    <p>{{bugs.name}}</p>
-    <p>{{bugs.developers.prenom}} {{bugs.developers.nom}}</p>
+<div *ngIf="bugs != undefined">
+    <p>Nom :{{bugs.name}}</p>
+    <p>Description : {{bugs.description}}</p>
+    <p>Priorité : {{bugs.priority}}</p>
+    <p>Progression : {{bugs.progress}}</p>
+    <p>Développeur : {{bugs.developers.nom}} {{bugs.developers.prenom}}</p>
+    <p *ngIf="bugs.commentaires.length > 0">Commentaires : </p>
+    <div *ngFor="let c of bugs.commentaires">
+        <p>{{ c.texte }}</p>
+    </div>
+</div>
+
+<!-- <p>{{bugs.developers.prenom}} {{bugs.developers.nom}}</p> -->
+
+    

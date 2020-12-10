@@ -3,6 +3,7 @@ import {HttpClient } from '@angular/common/http';
 import { Bug } from '../models/bug';
 import { Observable} from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Commentaire } from '../models/commentaire';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,9 @@ export class BugsService {
 
   public createBug(bug: Bug): Observable<Bug>{
     return this.http.post<Bug>(`${environment.url}/bugs`, bug);
+  }
+
+  public getCommentairesList(): Observable<Commentaire[]> {
+    return this.http.get<Commentaire[]>(`${environment.url}/commentaires`);
   }
 }

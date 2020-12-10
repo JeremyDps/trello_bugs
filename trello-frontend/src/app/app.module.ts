@@ -8,13 +8,17 @@ import { BugDetailComponent } from './bug-detail/bug-detail.component';
 import { CreateBugComponent } from './create-bug/create-bug.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DevelopersListComponent } from './developers-list/developers-list.component';
+import { DevelopersDetailsComponent } from './developers-details/developers-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BugListComponent,
     BugDetailComponent,
-    CreateBugComponent
+    CreateBugComponent,
+    DevelopersListComponent,
+    DevelopersDetailsComponent
   ],
   imports: [
     BrowserModule,

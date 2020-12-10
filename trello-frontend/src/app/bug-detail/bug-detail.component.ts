@@ -11,7 +11,7 @@ import { BugsService } from '../service/bugs.service';
 })
 export class BugDetailComponent implements OnInit {
 
-  bugs: Bug;
+  bugs: Bug | undefined;
 
   constructor(private bugsService: BugsService, 
     private route: ActivatedRoute) { }

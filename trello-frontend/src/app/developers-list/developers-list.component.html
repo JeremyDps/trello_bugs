@@ -1,0 +1,8 @@
+<div class="row" *ngFor="let d of devs">
+    <div class="col-lg-6">
+        <p>{{d.nom}} {{d.prenom}}</p>
+        <div *ngFor="let b of d.bugs">
+            <p>{{b.name}} - {{b.priority}} - {{b.progress}}</p>
+        </div>
+    </div>
+</div>
