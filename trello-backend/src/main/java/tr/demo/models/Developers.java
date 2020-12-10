@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.CascadeType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,11 +31,11 @@ public class Developers {
 	private String prenom;
 	private String avatar;
 
-	@OneToMany(mappedBy = "developers")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "developers")
 	@JsonIgnoreProperties({"developers", "commentaire"})
 	private List<Bugs> bugs;
 		
-	@OneToMany(mappedBy = "developers")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "developers")
 	@JsonIgnoreProperties({"bug", "developers"})
 	private List<Commentaire> commentaire;
 }

@@ -8,4 +8,5 @@ insert into bugs (id, name, description, priority, progress, creation_date, deve
 (3, 'bug 3', 'description du bug 3', 'HAUTE', 'TERMINE', '2020-12-09', 2);
 
 insert into commentaire(id, texte, bug_id, developers_id) values
-(1, 'commentaire 1 bug 1', 1, 1);
+(1, 'commentaire 1 bug 1', 1, 1),
+(2, 'commentaire 2 bug 1', 1, 2);

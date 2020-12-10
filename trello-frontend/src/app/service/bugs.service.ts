@@ -31,4 +31,8 @@ export class BugsService {
   public getCommentairesList(): Observable<Commentaire[]> {
     return this.http.get<Commentaire[]>(`${environment.url}/commentaires`);
   }
+
+  public deleteCommentaire(id: number): Observable<any>{
+    return this.http.delete(`${environment.url}/commentaires/${id}`);
+  }
 }

@@ -11,7 +11,7 @@ import {formatDate} from '@angular/common';
 })
 export class CreateBugComponent implements OnInit {
 
-  createForm: FormGroup | undefined;
+  createForm: FormGroup = null;
   current_date = formatDate(new Date(), 'yyyy-MM-dd', 'en');
 
 

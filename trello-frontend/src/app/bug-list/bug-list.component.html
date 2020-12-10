@@ -13,6 +13,11 @@
           <p>{{ b.priority }}</p>
           <p>{{b.developers.nom}}</p>
           <p>{{b.developers.prenom}}</p>
+          <p>
+            <button (click)="deleteBug(b.id)" type="button" class="btn btn-outline-danger">
+              Supprimer
+            </button>
+          </p>
         </div>
       </div>
     </div>

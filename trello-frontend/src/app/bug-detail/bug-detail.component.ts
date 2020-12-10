@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { delay } from 'rxjs/operators';
 import { Bug } from '../models/bug';
+import { Commentaire } from '../models/commentaire';
 import { BugsService } from '../service/bugs.service';
 
 @Component({
@@ -12,6 +13,7 @@ import { BugsService } from '../service/bugs.service';
 export class BugDetailComponent implements OnInit {
 
   bugs: Bug | undefined;
+  commentaire : Commentaire[] = [];
 
   constructor(private bugsService: BugsService, 
     private route: ActivatedRoute) { }
@@ -22,6 +24,12 @@ export class BugDetailComponent implements OnInit {
     .subscribe((bugResponse => {
       this.bugs = bugResponse;
       console.log(this.bugs);
+    }))
+
+    this.bugsService.getCommentairesList()
+    .subscribe((comResponse => {
+      this.commentaire = comResponse;
+      console.log(this.commentaire);
     }))
   }
 

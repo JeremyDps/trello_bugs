@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.CascadeType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,7 +49,7 @@ public class Bugs {
     @JsonIgnoreProperties({"bugs", "commentaire"})
     private Developers developers;
     
-    @OneToMany(mappedBy="bug")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="bug")
     @JsonIgnoreProperties({"bug", "developers"})
     private List<Commentaire> commentaires;
 

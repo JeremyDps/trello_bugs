@@ -5,8 +5,9 @@
     <p>Priorité : {{bugs.priority}}</p>
     <p>Progression : {{bugs.progress}}</p>
     <p>Développeur : {{bugs.developers.nom}} {{bugs.developers.prenom}}</p>
-    <p *ngIf="bugs.commentaires.length > 0">Commentaires : </p>
-    <div *ngFor="let c of bugs.commentaires">
+    <p *ngIf="commentaire.length > 0">Commentaires : </p>
+    <div *ngFor="let c of commentaire">
+        <p>Par {{c.developers.nom}} {{c.developers.prenom}} </p>
         <p>{{ c.texte }}</p>
     </div>
 </div>

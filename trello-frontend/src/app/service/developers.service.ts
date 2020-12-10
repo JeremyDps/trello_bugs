@@ -16,7 +16,7 @@ export class DevelopersService {
   }
 
   public getDevelopersById(id: number): Observable<Developer> {
-    return this.httpCLient.get<Developer>(`${environment.url}/bugs/${id}`);
+    return this.httpCLient.get<Developer>(`${environment.url}/developers/${id}`);
   }
 
   public deleteDeveloper(id: number): Observable<any>{
