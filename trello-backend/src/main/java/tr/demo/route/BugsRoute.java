@@ -123,11 +123,15 @@ public class BugsRoute {
             throw new ResourceNotFoundException("Developer not found with id = " + id);
         }
 
-        List<Bugs> tab = new ArrayList<>();
+        //List<Bugs> tab = new ArrayList<>();
 
         Developers existDev = developersRepository.findById(id).orElse(null);
-        existDev.setBugs(tab);
-        developersRepository.save(existDev);
+        /*existDev.setBugs(tab);
+        developersRepository.save(existDev);*/
+
+        for(Bugs bugs: existDev.getBugs()) {
+            bugs.setDevelopers(null);
+        }
 
         return developersRepository.findById(id)
                 .map(dev -> {
