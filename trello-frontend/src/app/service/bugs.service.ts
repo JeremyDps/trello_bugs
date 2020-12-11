@@ -35,4 +35,8 @@ export class BugsService {
   public deleteCommentaire(id: number): Observable<any>{
     return this.http.delete(`${environment.url}/commentaires/${id}`);
   }
+
+  public createCommentaire(com: Commentaire, id: number): Observable<Commentaire> {
+    return this.http.post<Commentaire>(`${environment.url}/commentaires/${id}`, com);
+  }
 }

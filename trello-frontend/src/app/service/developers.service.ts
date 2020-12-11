@@ -27,4 +27,8 @@ export class DevelopersService {
     return this.httpCLient.post<Developer>(`${environment.url}/developers`, dev);
   }
 
+  public getAvatar(linkAvatar: string): Observable<Developer> {
+    return this.httpCLient.get<Developer>(linkAvatar);
+  }
+
 }

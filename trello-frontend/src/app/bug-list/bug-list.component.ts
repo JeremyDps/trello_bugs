@@ -25,11 +25,13 @@ export class BugListComponent implements OnInit {
     }));
   }
 
-  deleteBug(id: number): void{
-    this.bugsService.deleteBug(id).subscribe((deleteResponse) => {
-      this.bugs = this.bugs.filter(b=>b.id !== id);
-    },(error) => {
-    });
+  deleteBug(id: number | undefined): void{
+    if(id != undefined) {
+      this.bugsService.deleteBug(id).subscribe((deleteResponse) => {
+        this.bugs = this.bugs.filter(b=>b.id !== id);
+      },(error) => {
+      });
+    }    
   }
 
   // addBug(newBug: Bug): void {

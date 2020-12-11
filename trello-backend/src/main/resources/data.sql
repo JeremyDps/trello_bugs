@@ -1,6 +1,7 @@
 insert into developers (id, nom, prenom) values
 (1, 'Dupuis', 'Jeremy'),
-(2, 'Duchmol', 'Robert');
+(2, 'Duchmol', 'Robert'),
+(3, 'aa', 'bb');
 
 insert into bugs (id, name, description, priority, progress, creation_date, developers_id) values
 (1, 'bug 1', 'description du bug 1', 'NORMALE', 'TODO', '2020-11-29', 1),

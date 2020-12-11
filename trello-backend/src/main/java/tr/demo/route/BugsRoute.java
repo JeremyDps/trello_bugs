@@ -1,6 +1,7 @@
 package tr.demo.route;
 
 import java.util.List;
+import java.util.ArrayList;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -116,6 +117,51 @@ public class BugsRoute {
         return ResponseEntity.ok().build();
     }
 
+    @DeleteMapping("developers/{id}")
+    public ResponseEntity<?> deleteDevelopers(@PathVariable("id") Integer id) {
+        if(!developersRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Developer not found with id = " + id);
+        }
+
+        List<Bugs> tab = new ArrayList<>();
+
+        Developers existDev = developersRepository.findById(id).orElse(null);
+        existDev.setBugs(tab);
+        developersRepository.save(existDev);
+
+        return developersRepository.findById(id)
+                .map(dev -> {
+                    developersRepository.delete(dev);
+                    return ResponseEntity.ok().build();
+                }).orElseThrow(() -> new ResourceNotFoundException("Le développeur n'a pas été trouvé avec l'id = " + id));
+    }
+
+    /*@PutMapping("developers/{id}")
+    public ResponseEntity<?> updateDev(@PathVariable("id") Integer id) {
+        if(!developersRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Dev not found with id = " + id);
+        }
+
+        Developers d = developersRepository.findById(id).orElse(null);
+
+        List<Bugs> tab = d.getBugs();
+        List<Bugs> t = new ArrayList<>();
+        Developer de = null;
+
+        int idBug = tab.indexOf(id);
+
+        Bugs b = bugsRepository.findById(idBug).orElse(null);
+
+        b.setDevelopers(de);
+        d.setBugs(tab);
+        bugsRepository.save(b);
+
+
+        developersRepository.save(d);
+
+        return ResponseEntity.ok().build();
+    }*/
+
     @DeleteMapping("bugs/{id}")
     public ResponseEntity<?> deleteBugs(@PathVariable("id") Integer id) {
         if(!bugsRepository.existsById(id)) {
@@ -153,18 +199,7 @@ public class BugsRoute {
         );
     }
 
-    @DeleteMapping("developers/{id}")
-    public ResponseEntity<?> deleteDevelopers(@PathVariable("id") Integer id) {
-        if(!developersRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Developer not found with id = " + id);
-        }
 
-        return developersRepository.findById(id)
-                .map(dev -> {
-                    developersRepository.delete(dev);
-                    return ResponseEntity.ok().build();
-                }).orElseThrow(() -> new ResourceNotFoundException("Le développeur n'a pas été trouvé avec l'id = " + id));
-    }
 
     //Routes sur les Commentaires
     @GetMapping("commentaires/{id}")

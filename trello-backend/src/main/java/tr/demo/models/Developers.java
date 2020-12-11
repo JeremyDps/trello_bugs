@@ -31,7 +31,7 @@ public class Developers {
 	private String prenom;
 	private String avatar;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "developers")
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = false, mappedBy = "developers")
 	@JsonIgnoreProperties({"developers", "commentaire"})
 	private List<Bugs> bugs;
 		

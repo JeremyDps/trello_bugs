@@ -7,5 +7,5 @@ export interface Bug{
     priority: string;
     progress: string;
     creation_date: Date;
-    developers: Developer
+    developers: Developer;
 }

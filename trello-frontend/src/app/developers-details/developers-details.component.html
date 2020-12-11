@@ -1,12 +1,18 @@
 <div class="row">
     <div class="col-lg-12" *ngIf="devs != undefined">
         <h1>{{ devs.nom }} {{devs.prenom}}</h1>
-        <div *ngIf="devs.bugs.length > 0">
-            <h2>Liste des bugs</h2>
-            <div *ngFor="let b of devs.bugs">
-                <h3>{{ b.name }}</h3>
-                <p>{{ b.description }}</p>
-            </div>
+        <h2>Liste des bugs</h2>
+        <div *ngFor="let b of bugs">
+            <div *ngIf="b.developers.id == devs.id">
+                <div>
+                    <h3>{{ b.name }}</h3>
+                    <p>{{ b.description }}</p>
+                </div>
+            </div>  
+        </div>
+
+        <div *ngIf="devs.avatar != null">
+            
         </div>
     </div>
 </div>

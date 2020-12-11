@@ -10,8 +10,22 @@
         <p>Par {{c.developers.nom}} {{c.developers.prenom}} </p>
         <p>{{ c.texte }}</p>
     </div>
+
+    <div>
+        <h3>Ajouter un nouveau commentaire</h3>
+        <form [formGroup]="createForm" (ngSubmit)="onSubmitCom(createForm.value)">
+            <div class="form-group">
+                <select class="form-control" name="developer" id="developer">
+                    <option *ngFor="let d of devs" name="d.id">{{d.prenom}} {{d.nom}}</option>
+                </select>
+                <textarea placeholder="Texte" class="form-control" id="texte" rows="5" cols="33" formControlName="texte" required></textarea>
+            </div>
+            <div class="form-group">
+                <button class="form-control btn btn-success" type="button" type="submit">Valider</button>
+            </div>
+        </form>
+    </div>
 </div>
 
-<!-- <p>{{bugs.developers.prenom}} {{bugs.developers.nom}}</p> -->
 
     
