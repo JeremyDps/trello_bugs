@@ -56,7 +56,7 @@ this.createForm = this.formBuilder.group({
   }
 
 
-  onSubmitCom(comData: { texte: any; developer: any; }): void {
+  onSubmitCom(comData: { developer: any; texte: any; }): void {
     // if(this.createForm != undefined) {
     //   this.createForm.reset();
     //   console.log("comDate dev : ", comData.developer);

@@ -138,33 +138,8 @@ public class BugsRoute {
                     developersRepository.delete(dev);
                     return ResponseEntity.ok().build();
                 }).orElseThrow(() -> new ResourceNotFoundException("Le développeur n'a pas été trouvé avec l'id = " + id));
+
     }
-
-    /*@PutMapping("developers/{id}")
-    public ResponseEntity<?> updateDev(@PathVariable("id") Integer id) {
-        if(!developersRepository.existsById(id)) {
-            throw new ResourceNotFoundException("Dev not found with id = " + id);
-        }
-
-        Developers d = developersRepository.findById(id).orElse(null);
-
-        List<Bugs> tab = d.getBugs();
-        List<Bugs> t = new ArrayList<>();
-        Developer de = null;
-
-        int idBug = tab.indexOf(id);
-
-        Bugs b = bugsRepository.findById(idBug).orElse(null);
-
-        b.setDevelopers(de);
-        d.setBugs(tab);
-        bugsRepository.save(b);
-
-
-        developersRepository.save(d);
-
-        return ResponseEntity.ok().build();
-    }*/
 
     @DeleteMapping("bugs/{id}")
     public ResponseEntity<?> deleteBugs(@PathVariable("id") Integer id) {
